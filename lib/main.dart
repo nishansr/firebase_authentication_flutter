@@ -1,5 +1,6 @@
 import 'package:authentication/firebase_options.dart';
 import 'package:authentication/screens/login_screen.dart';
+import 'package:authentication/screens/signup_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

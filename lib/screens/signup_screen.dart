@@ -1,34 +1,33 @@
-import 'package:authentication/screens/signup_screen.dart';
-import 'package:authentication/widgets/buttons.dart';
+import 'package:authentication/screens/login_screen.dart';
+import 'package:authentication/services/firebase_auth_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import '../services/firebase_auth_methods.dart';
+import '../widgets/buttons.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
 
-  void loginuser() {
-    FirebaseAuthMethods(FirebaseAuth.instance).loginWithEmail(
-        email: _emailcontroller.text,
-        password: _passwordcontroller.text,
-        context: context);
-  }
-
-  @override
   void dispose() {
     super.dispose();
     _emailcontroller.dispose();
     _passwordcontroller.dispose();
+  }
+
+  void signupuser() async {
+    FirebaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
+      email: _emailcontroller.text,
+      password: _passwordcontroller.text,
+      context: context,
+    );
   }
 
   @override
@@ -41,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Login',
+              'Register',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.orange[900],
@@ -55,14 +54,14 @@ class _LoginPageState extends State<LoginPage> {
                 label: 'Password', controller: _passwordcontroller, hide: true),
             SizedBox(height: 30),
 
-            //! Login Button
+            //! SignUp Button
             ElevatedButton(
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(Colors.orange[900])),
-              onPressed: loginuser,
+              onPressed: signupuser,
               child: Text(
-                'Login',
+                'SignUp',
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
             ),
@@ -71,11 +70,11 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   setState(() {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (builder) => SignUpPage()));
+                        MaterialPageRoute(builder: (builder) => LoginPage()));
                   });
                 },
                 child: Text(
-                  'Register',
+                  'Login',
                   style: TextStyle(fontSize: 20),
                 ))
           ],
